@@ -1,12 +1,29 @@
-require "app/modules/state/game_objects/game_object"
+require 'app/modules/state/game_objects/base_game_object'
 
 class GameSession
-  def initialize args
-    self.add_PC(args.state)
+  attr_dr
+  def initialize
+    @game_objects = []
+    add_game_object
   end
 
-  def add_PC state
-    pc = GameObjects::BaseGameObject.new
-    puts("PC Initialized!")
+  def tick
+    render_sprites
+    puts(outputs.sprites)
+  end
+
+  def add_game_object
+    game_object = GameObjects::BaseGameObject.spawn_from_type_id(type_id: :base_game_object, x: 100, y: 100)
+    @game_objects << game_object
+  end
+
+  def render_sprites
+    @game_objects.each do |game_object|
+      outputs.sprites << {
+        x: game_object.x,
+        y: game_object.y,
+        **game_object.sprite.transform_keys(&:to_sym)
+      }
+    end
   end
 end
