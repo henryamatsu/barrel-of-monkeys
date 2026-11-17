@@ -9,11 +9,12 @@ class GameSession
 
   def tick
     render_sprites
-    puts(outputs.sprites)
   end
 
   def add_game_object
-    game_object = GameObjects::BaseGameObject.spawn_from_type_id(type_id: :base_game_object, x: 100, y: 100)
+    x = 100
+    y = 100
+    game_object = GameObjects::BaseGameObject.spawn_from_type_id(type_id: :base_game_object, x: x, y: y)
     @game_objects << game_object
   end
 
